@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 import 'register_screen.dart';
 import 'home_screen.dart';
 
@@ -19,13 +21,59 @@ class MarketPremiumApp extends StatelessWidget {
   }
 }
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+
+  final correoController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future<void> validarLogin() async {
+
+    final prefs = await SharedPreferences.getInstance();
+
+    String correoGuardado =
+        prefs.getString("correo") ?? "";
+
+    String passwordGuardada =
+        prefs.getString("password") ?? "";
+
+    if (
+    correoController.text.trim() == correoGuardado &&
+        passwordController.text.trim() == passwordGuardada
+    ) {
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const HomeScreen(),
+        ),
+      );
+
+    } else {
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            "❌ Correo o contraseña incorrectos",
+          ),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: const Color(0xFF111111),
+
       body: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -33,6 +81,7 @@ class LoginScreen extends StatelessWidget {
               maxWidth: 550,
             ),
             padding: const EdgeInsets.all(25),
+
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -78,6 +127,7 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: 40),
 
                 TextField(
+                  controller: correoController,
                   style: const TextStyle(
                     color: Colors.white,
                   ),
@@ -101,6 +151,7 @@ class LoginScreen extends StatelessWidget {
                 const SizedBox(height: 20),
 
                 TextField(
+                  controller: passwordController,
                   obscureText: true,
                   style: const TextStyle(
                     color: Colors.white,
@@ -134,14 +185,7 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15),
                       ),
                     ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HomeScreen(),
-                        ),
-                      );
-                    },
+                    onPressed: validarLogin,
                     child: const Text(
                       "INGRESAR",
                       style: TextStyle(
