@@ -29,9 +29,9 @@ class _PerfilScreenState extends State<PerfilScreen> {
 
     final prefs = await SharedPreferences.getInstance();
 
-    nombre = prefs.getString("Nombres") ?? "";
-    apellido = prefs.getString("Apellidos") ?? "";
-    correo = prefs.getString("Correo") ?? "";
+    nombre = prefs.getString("nombre") ?? "";
+    apellido = prefs.getString("apellido") ?? "";
+    correo = prefs.getString("correo") ?? "";
 
     print("Nombres: $nombre");
     print("Apellidos: $apellido");
@@ -49,17 +49,17 @@ class _PerfilScreenState extends State<PerfilScreen> {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setString(
-      "Nombre",
+      "nombre",
       nombreController.text,
     );
 
     await prefs.setString(
-      "Apellido",
+      "apellido",
       apellidoController.text,
     );
 
     await prefs.setString(
-      "Correo",
+      "correo",
       correoController.text,
     );
 

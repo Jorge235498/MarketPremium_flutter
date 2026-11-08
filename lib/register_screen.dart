@@ -32,22 +32,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setString(
-      "Nombres",
+      "nombre",
       nombreController.text,
     );
 
     await prefs.setString(
-      "Apellidos",
+      "apellido",
       apellidoController.text,
     );
 
     await prefs.setString(
-      "Correo",
+      "correo",
       correoController.text,
     );
 
     await prefs.setString(
-      "Password",
+      "password",
       passwordController.text,
     );
 
@@ -123,7 +123,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   controller: nombreController,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                    hintText: "Nombres",
+                    hintText: "nombre",
                     prefixIcon: const Icon(
                       Icons.person,
                       color: Color(0xFF00A2FF),
@@ -142,7 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   controller: apellidoController,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                    hintText: "Apellidos",
+                    hintText: "apellido",
                     prefixIcon: const Icon(
                       Icons.person_outline,
                       color: Color(0xFFD4AF37),
