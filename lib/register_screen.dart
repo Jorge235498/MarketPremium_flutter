@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'data_store.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -22,7 +23,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text("Las contraseñas no coinciden"),
+          content: Text(
+            "Las contraseñas no coinciden",
+          ),
         ),
       );
 
@@ -31,29 +34,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     final prefs = await SharedPreferences.getInstance();
 
+    // BORRAR DATOS ANTERIORES
+    await prefs.clear();
+
+    // BORRAR CARRITO ANTERIOR
+    DataStore.carrito.clear();
+
+    // BORRAR HISTORIAL ANTERIOR
+    DataStore.historial.clear();
+
     await prefs.setString(
       "nombre",
-      nombreController.text,
+      nombreController.text.trim(),
     );
 
     await prefs.setString(
       "apellido",
-      apellidoController.text,
+      apellidoController.text.trim(),
     );
 
     await prefs.setString(
       "correo",
-      correoController.text,
+      correoController.text.trim(),
     );
 
     await prefs.setString(
       "password",
-      passwordController.text,
+      passwordController.text.trim(),
     );
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
-        content: Text("Usuario registrado correctamente"),
+        content: Text(
+          "✅ Usuario registrado correctamente",
+        ),
+        backgroundColor: Colors.green,
       ),
     );
 
